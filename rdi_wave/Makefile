@@ -1,4 +1,5 @@
-all: notes.pdf 04.out 04_chunk_overview.pdf 04_temperature.pdf
+all: notes.pdf \
+	04.out 04_chunk_overview.pdf 04_temperature.pdf 05.out 05_temperature.pdf
 
 %.out: %.R
 	Rscript $< > $@
