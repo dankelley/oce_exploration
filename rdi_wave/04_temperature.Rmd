@@ -1,0 +1,15 @@
+---
+title: Temperature time series
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+The chunk type called 'FIRST LEADER' stores time and temperature (plus some other things).  I don't think other data types store temperature, but I could be wrong.  Anyway, below is a graph.
+
+```{r fig.cap="Time variation of temperature."}
+library(oce)
+l <- readLines(pipe("grep 'FIRST_LEADER' 04.out"))
+time <- as.POSIXct(gsub(".*time=([^,]*).*", "\\1", l), tz="UTC")
+temperature <- as.numeric(gsub(".*Temp=", "", l))
+oce.plot.ts(time, temperature, type="l")
+```

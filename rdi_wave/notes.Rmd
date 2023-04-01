@@ -1,0 +1,41 @@
+---
+title: Examining a wave-type RDI file
+date: "`r Sys.Date()`"
+author: Dan Kelley
+output: pdf_document
+---
+
+I decided to try to explore this file by walking through chunks.  I am doing
+this in R, so it is not possible to do checksum computations. Without such
+computations, there is a risk of false identification of chunks, and so the
+present test is not the first step in decoding these files.
+
+The data format is confusing, with chunks within chunks and (I think) no
+checksum information on the interior chunks.  I suppose this is explained in
+the docs. As a side note, the docs are less detailed than for other RDI
+formats, so some guesswork was required even for the very small coverage of the
+code shown in the appendix.
+
+I do not plan on trying to add oce support for this file type, giving where it
+resides in coding-difficulty and user-need space.
+
+Below is a graph from an initial trial at finding data chunks.  I have not
+bothered keeping track of the file (it might be 01.R, 02.R or 03.R) because I
+have moved on to the task of trying to read more than just the chunk landmarks.
+
+```{r echo=FALSE}
+timing <- "
+N t
+1e3 0.0399
+1e4 0.0437
+1e5 0.0494
+1e6 0.2496
+1e7 0.9945
+95.06e6 7.8129"
+d <- read.table(text=timing, header=TRUE)
+d$N <- d$N / 1e6
+m <- lm(d$t~d$N)
+plot(d$N, d$t, xlab="File size (Mb)", ylab="Elapsed Time [s]", type="o")
+abline(m, col=2, lty=2)
+mtext(sprintf("Red line: %.2f Mbyte/second", 1/coef(m)[2]))
+```

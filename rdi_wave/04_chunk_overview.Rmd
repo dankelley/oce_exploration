@@ -1,0 +1,32 @@
+---
+title: Pattern of data chunks
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+Here is a sampling of the data (just 0.5Mb out of the 95Mb of the file).
+
+```{r}
+lines <- readLines("04.out")
+lines2 <- lines[grepl("numberOfDataTypes:", lines)]
+lines3 <- gsub("^.*i0:([0-9]*).*numberOfDataTypes:([0-9]*).*$", "\\1 \\2", lines2)
+d <- read.table(text=lines3, col.names=c("i0", "numberOfDataTypes"))
+attach(d)
+par(mar=c(3,3,1,1), mgp=c(2,0.7,0))
+plot(i0[1:50000], numberOfDataTypes[1:50000], lwd=0.6)
+```
+
+Here is the start, showing that the file begins with a different pattern
+that the one that is repeated later.
+
+```{r}
+par(mar=c(3,3,1,1), mgp=c(2,0.7,0))
+plot(i0[1:2500], numberOfDataTypes[1:2500], type="l", lwd=0.6, col=4)
+points(i0[1:2500], numberOfDataTypes[1:2500], cex=0.5, col=2)
+```
+
+A table reveals the pattern statistics.
+
+```{r}
+table(numberOfDataTypes)
+```
