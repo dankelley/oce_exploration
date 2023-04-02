@@ -1,0 +1,18 @@
+---
+title: Heading, Pitch and Roll
+author: Dan Kelley
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r}
+library(oce)
+load("06.rda")
+par(mfrow=c(4, 1), mar=c(3, 3, 1, 1), mgp=c(2, 0.7, 0.0))
+oce.plot.ts(firstLeader$time, firstLeader$temperature, type="l")
+plot(HPR$heading, type="l")
+plot(HPR$pitch, type="l")
+plot(HPR$roll, type="l")
+print(str(firstLeader))
+print(str(HPR))
+```
