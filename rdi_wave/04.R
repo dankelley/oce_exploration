@@ -110,7 +110,8 @@ while (TRUE) {
         size=2, n=numberOfDataTypes, endian="little")
     if (0 == length(checksumOffset) || checksumOffset==0) {
         t1 <- Sys.time()
-        stop("EOF at i0=", i0, " time=", as.numeric(t1)-as.numeric(t0), "s")
+        cat("EOF at i0=", i0, " time=", as.numeric(t1)-as.numeric(t0), "s\n")
+        break
     }
     if (debug > 0) {
         cat("chunk:", chunk, "; i0:", i0, "; buf:0x", paste(buf[i0 + 0:3], collapse=","),
